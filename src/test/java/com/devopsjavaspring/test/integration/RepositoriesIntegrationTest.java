@@ -1,6 +1,5 @@
 package com.devopsjavaspring.test.integration;
 
-import com.devopsjavaspring.DevopsjavaspringApplication;
 import com.devopsjavaspring.backend.persistence.domain.backend.Plan;
 import com.devopsjavaspring.backend.persistence.domain.backend.Role;
 import com.devopsjavaspring.backend.persistence.domain.backend.User;
@@ -8,14 +7,15 @@ import com.devopsjavaspring.backend.persistence.domain.backend.UserRole;
 import com.devopsjavaspring.backend.persistence.repositories.PlanRepository;
 import com.devopsjavaspring.backend.persistence.repositories.RoleRepository;
 import com.devopsjavaspring.backend.persistence.repositories.UserRepository;
+import com.devopsjavaspring.enums.PlansEnum;
+import com.devopsjavaspring.enums.RolesEnum;
+import com.devopsjavaspring.utils.UsersUtils;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.HashSet;
@@ -40,8 +40,8 @@ public class RepositoriesIntegrationTest {
     @Autowired
     private UserRepository userRepository;
 
-    private static final int BASIC_PLAN_ID = 1;
-    private static final int BASIC_ROLE_ID = 1;
+//    private static final int BASIC_PLAN_ID = 1;
+//    private static final int BASIC_ROLE_ID = 1;
 
     @Before
     public void init(){
@@ -53,9 +53,9 @@ public class RepositoriesIntegrationTest {
     @Test
     public void testCreateNewPlan() throws Exception {
         String expectedPlanType = "Basic";
-        Plan basicPlan = createBasicPlan();
+        Plan basicPlan = createPlan(PlansEnum.BASIC);
         planRepository.save(basicPlan);
-        Plan retrievedPlan = planRepository.findOne(BASIC_PLAN_ID);
+        Plan retrievedPlan = planRepository.findOne(PlansEnum.BASIC.getId());
         Assert.assertNotNull(retrievedPlan);
         Assert.assertEquals("Expected plan type should be Basic", expectedPlanType, retrievedPlan.getName());
 
@@ -63,41 +63,35 @@ public class RepositoriesIntegrationTest {
 
     @Test
     public void testCreateNewRole() throws Exception{
-        String expectedResult = "ROLE_USER";
-        Role role = createBasicRole();
+        String expectedResult = "ROLE_BASIC";
+        Role role = createRole(RolesEnum.BASIC);
         roleRepository.save(role);
-        Role retrieveRole = roleRepository.findOne(BASIC_ROLE_ID);
+        Role retrieveRole = roleRepository.findOne(RolesEnum.BASIC.getId());
         Assert.assertNotNull(retrieveRole);
-        Assert.assertEquals("Role name should equal ROLE_USER", expectedResult, retrieveRole.getName());
+        Assert.assertEquals("Role name should equal ROLE_BASIC", expectedResult, retrieveRole.getName());
     }
 
-    private Plan createBasicPlan(){
-        Plan plan = new Plan();
-        plan.setId(BASIC_PLAN_ID);
-        plan.setName("Basic");
-        return plan;
+    private Plan createPlan(PlansEnum plansEnum){
+        return new Plan(plansEnum);
     }
 
-    private Role createBasicRole(){
-        Role role = new Role();
-        role.setId(BASIC_ROLE_ID);
-        role.setName("ROLE_USER");
-        return role;
+    private Role createRole(RolesEnum rolesEnum){
+        return new Role(rolesEnum);
     }
 
     @Test
     public void createNewUser() throws Exception {
-        Plan basicPlan = createBasicPlan();
+        Plan basicPlan = createPlan(PlansEnum.BASIC);
         planRepository.save(basicPlan);
 
-        User basicUser = createBasicUser();
+        User basicUser = UsersUtils.createBasicUser("Kofi", "ko@me.com");
         basicUser.setPlan(basicPlan);
 
-        Role basicRole = createBasicRole();
+        Role basicRole = createRole(RolesEnum.BASIC);
 
         Set<UserRole> userRoles = new HashSet<>();
 
-        UserRole userRole = new UserRole();
+        UserRole userRole = new UserRole(basicUser, basicRole);
         userRole.setUser(basicUser);
         userRole.setRole(basicRole);
 
@@ -125,19 +119,4 @@ public class RepositoriesIntegrationTest {
 
     }
 
-    private User createBasicUser(){
-        User user = new User();
-        user.setUsername("username");
-        user.setPassword("password");
-        user.setEmail("me@gnail.com");
-        user.setFirstName("firstName");
-        user.setLastName("lastName");
-        user.setPhoneNumber("5714045633");
-        user.setCountry("US");
-        user.setEnabled(true);
-        user.setDescription("A basic description");
-        user.setProfileImageUrl("https://www.images.com");
-
-        return user;
-    }
 }

@@ -20,9 +20,14 @@ public class Plan implements Serializable {
     private String name;
 
     /** Default constructor. */
-    public Plan(){
+    public Plan() {
 
     }
+
+//    public Plan(PlansEnum plansEnum) {
+//        this.id = plansEnum.getId();
+//        this.name = plansEnum.getPlanName();
+//    }
 
     public int getId() {
         return id;

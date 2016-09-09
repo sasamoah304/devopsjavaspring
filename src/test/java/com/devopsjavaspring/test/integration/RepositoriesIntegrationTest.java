@@ -132,7 +132,7 @@ public class RepositoriesIntegrationTest {
         user.setEmail("me@gnail.com");
         user.setFirstName("firstName");
         user.setLastName("lastName");
-        user.setPhoneNumber("571-404-5633");
+        user.setPhoneNumber("5714045633");
         user.setCountry("US");
         user.setEnabled(true);
         user.setDescription("A basic description");

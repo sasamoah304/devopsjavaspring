@@ -6,7 +6,7 @@ import com.devopsjavaspring.backend.persistence.domain.backend.UserRole;
 import com.devopsjavaspring.backend.service.UserService;
 import com.devopsjavaspring.enums.PlansEnum;
 import com.devopsjavaspring.enums.RolesEnum;
-import com.devopsjavaspring.utils.UsersUtils;
+import com.devopsjavaspring.utils.UserUtils;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,7 +32,7 @@ public class UserServiceIntegrationTest {
 
         Set<UserRole> userRoles = new HashSet<>();
 
-        User basicUser = UsersUtils.createBasicUser("username", "me@exmple.com");
+        User basicUser = UserUtils.createBasicUser();
         userRoles.add(new UserRole(basicUser, new Role(RolesEnum.BASIC)));
 
         User user = userService.createUser(basicUser, PlansEnum.BASIC, userRoles);

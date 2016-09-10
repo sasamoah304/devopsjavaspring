@@ -5,27 +5,27 @@ import com.devopsjavaspring.backend.persistence.domain.backend.User;
 /**
  * Created by stephenasamoah on 9/9/16.
  */
-public class UsersUtils {
+public class UserUtils {
 
     /**
      * Non instantiable.
      */
-    private UsersUtils() {
+    private UserUtils() {
         throw new AssertionError("Non instantiable");
     }
 
     /**
      * Creates a user with basic attributes set.
-     * @param username The username.
-     * @param email The email.
+//     * @param username The username.
+//     * @param email The email.
      * @return A User entity
      */
-    public static User createBasicUser(String username, String email) {
+    public static User createBasicUser() {
 
         User user = new User();
-        user.setUsername(username);
+        user.setUsername("basicUser");
         user.setPassword("secret");
-        user.setEmail(email);
+        user.setEmail("me@example.com");
         user.setFirstName("firstName");
         user.setLastName("lastName");
         user.setPhoneNumber("123456789123");

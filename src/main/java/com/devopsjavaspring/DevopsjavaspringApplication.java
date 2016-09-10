@@ -6,14 +6,13 @@ import com.devopsjavaspring.backend.persistence.domain.backend.UserRole;
 import com.devopsjavaspring.backend.service.UserService;
 import com.devopsjavaspring.enums.PlansEnum;
 import com.devopsjavaspring.enums.RolesEnum;
-import com.devopsjavaspring.utils.UsersUtils;
+import com.devopsjavaspring.utils.UserUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -34,9 +33,9 @@ public class DevopsjavaspringApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... strings) throws Exception {
-		User user = UsersUtils.createBasicUser("sasamoah", "me@com");
+		User user = UserUtils.createBasicUser();
 		Set<UserRole> userRoles = new HashSet<>();
-		userRoles.add(new UserRole(user,new Role(RolesEnum.BASIC)));
+		userRoles.add(new UserRole(user,new Role(RolesEnum.PRO)));
 		LOG.debug("Creating user with username {}", user.getUsername());
 		userService.createUser(user, PlansEnum.PRO, userRoles);
 		LOG.info("User {} created", user.getUsername());

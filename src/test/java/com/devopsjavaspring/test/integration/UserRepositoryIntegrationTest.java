@@ -4,13 +4,9 @@ import com.devopsjavaspring.backend.persistence.domain.backend.Plan;
 import com.devopsjavaspring.backend.persistence.domain.backend.Role;
 import com.devopsjavaspring.backend.persistence.domain.backend.User;
 import com.devopsjavaspring.backend.persistence.domain.backend.UserRole;
-import com.devopsjavaspring.backend.persistence.repositories.PlanRepository;
-import com.devopsjavaspring.backend.persistence.repositories.RoleRepository;
-import com.devopsjavaspring.backend.persistence.repositories.UserRepository;
 import com.devopsjavaspring.backend.service.UserSecurityService;
 import com.devopsjavaspring.enums.PlansEnum;
 import com.devopsjavaspring.enums.RolesEnum;
-import com.devopsjavaspring.utils.UserUtils;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
@@ -23,8 +19,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 /**
  * Created by stephenasamoah on 9/9/16.
@@ -34,10 +30,10 @@ import java.util.Set;
 //@SpringApplicationConfiguration(classes = DevopsjavaspringApplication.class)
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class UserIntegrationTest extends AbstractIntegrationTest {
+public class UserRepositoryIntegrationTest extends AbstractIntegrationTest {
 
     /** The application logger */
-    private static final Logger LOG = LoggerFactory.getLogger(UserIntegrationTest.class);
+    private static final Logger LOG = LoggerFactory.getLogger(UserRepositoryIntegrationTest.class);
 
 
     @Autowired
@@ -119,5 +115,28 @@ public class UserIntegrationTest extends AbstractIntegrationTest {
         Assert.assertEquals("Expect username to equal Kofi", expectedResult, actualResults);
     }
 
+    @Test
+    public void testGetUserByEmail() throws Exception {
+        User user = createUser(testName);
 
+        User newlyFoundUser = userRepository.findByEmail(user.getEmail());
+        Assert.assertNotNull(newlyFoundUser);
+        Assert.assertNotNull(newlyFoundUser.getId());
+
+    }
+
+    @Test
+    public void testUpdateUserPassword() throws Exception {
+        User user = createUser(testName);
+        Assert.assertNotNull(user);
+        Assert.assertNotNull(user.getId());
+
+        String newPassword = UUID.randomUUID().toString();
+
+        userRepository.updateUserPassword(user.getId(), newPassword);
+
+        user = userRepository.findOne(user.getId());
+        Assert.assertEquals(newPassword, user.getPassword());
+
+    }
 }

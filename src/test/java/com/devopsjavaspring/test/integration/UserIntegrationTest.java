@@ -34,19 +34,11 @@ import java.util.Set;
 //@SpringApplicationConfiguration(classes = DevopsjavaspringApplication.class)
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class RepositoriesIntegrationTest {
+public class UserIntegrationTest extends AbstractIntegrationTest {
 
     /** The application logger */
-    private static final Logger LOG = LoggerFactory.getLogger(RepositoriesIntegrationTest.class);
+    private static final Logger LOG = LoggerFactory.getLogger(UserIntegrationTest.class);
 
-    @Autowired
-    private PlanRepository planRepository;
-
-    @Autowired
-    private RoleRepository roleRepository;
-
-    @Autowired
-    private UserRepository userRepository;
 
     @Autowired
     private UserSecurityService userSecurityService;
@@ -83,13 +75,6 @@ public class RepositoriesIntegrationTest {
         Assert.assertEquals("Role name should equal ROLE_BASIC", expectedResult, retrieveRole.getName());
     }
 
-    private Plan createPlan(PlansEnum plansEnum){
-        return new Plan(plansEnum);
-    }
-
-    private Role createRole(RolesEnum rolesEnum){
-        return new Role(rolesEnum);
-    }
 
     @Test
     public void createNewUser() throws Exception {
@@ -134,25 +119,5 @@ public class RepositoriesIntegrationTest {
         Assert.assertEquals("Expect username to equal Kofi", expectedResult, actualResults);
     }
 
-    private User createUser(String username, String email){
-        Plan basicPlan = createPlan(PlansEnum.BASIC);
-        planRepository.save(basicPlan);
-
-        User basicUser = UserUtils.createBasicUser(username, email);
-        basicUser.setPlan(basicPlan);
-
-        Role basicRole = createRole(RolesEnum.BASIC);
-        roleRepository.save(basicRole);
-
-        Set<UserRole> userRoles = new HashSet<>();
-        UserRole userRole = new UserRole(basicUser, basicRole);
-        userRoles.add(userRole);
-
-        basicUser.getUserRoles().addAll(userRoles);
-        basicUser = userRepository.save(basicUser);
-
-        return basicUser;
-
-    }
 
 }

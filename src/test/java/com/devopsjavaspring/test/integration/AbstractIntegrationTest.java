@@ -1,18 +1,19 @@
 package com.devopsjavaspring.test.integration;
 
-import com.devopsjavaspring.backend.persistence.domain.backend.Plan;
-import com.devopsjavaspring.backend.persistence.domain.backend.Role;
-import com.devopsjavaspring.backend.persistence.domain.backend.User;
-import com.devopsjavaspring.backend.persistence.domain.backend.UserRole;
+import com.devopsjavaspring.backend.persistence.domain.backend.*;
+import com.devopsjavaspring.backend.persistence.repositories.PasswordResetTokenRepository;
 import com.devopsjavaspring.backend.persistence.repositories.PlanRepository;
 import com.devopsjavaspring.backend.persistence.repositories.RoleRepository;
 import com.devopsjavaspring.backend.persistence.repositories.UserRepository;
 import com.devopsjavaspring.enums.PlansEnum;
 import com.devopsjavaspring.enums.RolesEnum;
 import com.devopsjavaspring.utils.UserUtils;
+import org.junit.Assert;
 import org.junit.rules.TestName;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -30,6 +31,13 @@ public abstract class AbstractIntegrationTest {
 
     @Autowired
     protected UserRepository userRepository;
+
+
+    @Value("${token.expiration.length.minutes}")
+    private int expirationTimeInMinutes;
+
+    @Autowired
+    private PasswordResetTokenRepository passwordResetTokenRepository;
 
 
     protected Plan createPlan(PlansEnum plansEnum){
@@ -63,5 +71,14 @@ public abstract class AbstractIntegrationTest {
 
     protected User createUser(TestName testName){
         return createUser(testName.getMethodName(), testName.getMethodName() + "@gmail.com");
+    }
+
+    // --------Private Methods
+
+    private PasswordResetToken createPasswordResetToken(String token, User user, LocalDateTime now){
+        PasswordResetToken passwordResetToken = new PasswordResetToken(token, user, now, expirationTimeInMinutes);
+        passwordResetTokenRepository.save(passwordResetToken);
+        Assert.assertNotNull(passwordResetToken.getId());
+        return passwordResetToken;
     }
 }

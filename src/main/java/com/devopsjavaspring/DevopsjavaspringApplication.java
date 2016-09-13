@@ -3,6 +3,7 @@ package com.devopsjavaspring;
 import com.devopsjavaspring.backend.persistence.domain.backend.Role;
 import com.devopsjavaspring.backend.persistence.domain.backend.User;
 import com.devopsjavaspring.backend.persistence.domain.backend.UserRole;
+import com.devopsjavaspring.backend.service.PlanService;
 import com.devopsjavaspring.backend.service.UserService;
 import com.devopsjavaspring.enums.PlansEnum;
 import com.devopsjavaspring.enums.RolesEnum;
@@ -27,6 +28,9 @@ public class DevopsjavaspringApplication implements CommandLineRunner {
     @Autowired
 	private UserService userService;
 
+	@Autowired
+	private PlanService planService;
+
 	@Value("${webmaster.username}")
 	private String webmasterUsername;
 
@@ -44,6 +48,9 @@ public class DevopsjavaspringApplication implements CommandLineRunner {
 	@Override
 	public void run(String... strings) throws Exception {
 
+		LOG.info("Creating Basic and Pro plans in the database");
+		planService.createPlan(PlansEnum.BASIC.getId());
+		planService.createPlan(PlansEnum.PRO.getId());
 
 		User user = UserUtils.createBasicUser(webmasterUsername, webmasterEmail);
 		user.setPassword(webmasterPassword);

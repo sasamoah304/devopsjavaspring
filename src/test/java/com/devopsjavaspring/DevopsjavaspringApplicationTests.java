@@ -1,6 +1,6 @@
 package com.devopsjavaspring;
 
-import com.devopsjavaspring.web.i18n.I18NService;
+import com.devopsjavaspring.backend.service.I18NService;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

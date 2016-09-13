@@ -51,7 +51,7 @@ public class UserUtils {
                         ForgotMyPasswordController.CHANGE_PASSWORD_PATH +
                         "?id=" +
                         userId +
-                        "&token" +
+                        "&token=" +
                         token;
         return passwordResetUrl;
     }

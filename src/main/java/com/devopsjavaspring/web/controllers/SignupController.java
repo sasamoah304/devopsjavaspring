@@ -159,16 +159,16 @@ public class    SignupController {
             roles.add(new UserRole(user, new Role(RolesEnum.PRO)));
 
             // Extra precaution in case the POST method is invoked programmatically
-//            if (StringUtils.isEmpty(payload.getCardCode()) ||
-//                    StringUtils.isEmpty(payload.getCardNumber()) ||
-//                    StringUtils.isEmpty(payload.getCardMonth()) ||
-//                    StringUtils.isEmpty(payload.getCardYear())) {
-//                LOG.error("One or more credit card fields is null or empty. Returning error to the user");
-//                model.addAttribute(SIGNED_UP_MESSAGE_KEY, "false");
-//                model.addAttribute(ERROR_MESSAGE_KEY, "One of more credit card details is null or empty.");
-//                return SUBSCRIPTION_VIEW_NAME;
-//
-//            }
+            if (StringUtils.isEmpty(payload.getCardCode()) ||
+                    StringUtils.isEmpty(payload.getCardNumber()) ||
+                    StringUtils.isEmpty(payload.getCardMonth()) ||
+                    StringUtils.isEmpty(payload.getCardYear())) {
+                LOG.error("One or more credit card fields is null or empty. Returning error to the user");
+                model.addAttribute(SIGNED_UP_MESSAGE_KEY, "false");
+                model.addAttribute(ERROR_MESSAGE_KEY, "One of more credit card details is null or empty.");
+                return SUBSCRIPTION_VIEW_NAME;
+
+            }
 
             // If the user has selected the pro account, creates the Stripe customer to store the stripe customer id in
             // the db

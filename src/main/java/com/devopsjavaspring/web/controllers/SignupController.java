@@ -11,6 +11,8 @@ import com.devopsjavaspring.backend.service.StripeService;
 import com.devopsjavaspring.backend.service.UserService;
 import com.devopsjavaspring.enums.PlansEnum;
 import com.devopsjavaspring.enums.RolesEnum;
+import com.devopsjavaspring.exceptions.S3Exception;
+import com.devopsjavaspring.exceptions.StripeException;
 import com.devopsjavaspring.utils.StripeUtils;
 import com.devopsjavaspring.utils.UserUtils;
 import com.devopsjavaspring.web.domain.frontend.BasicAccountPayload;
@@ -203,18 +205,18 @@ public class    SignupController {
         return SUBSCRIPTION_VIEW_NAME;
     }
 
-//    @ExceptionHandler({StripeException.class, S3Exception.class})
-//    public ModelAndView signupException(HttpServletRequest request, Exception exception) {
-//
-//        LOG.error("Request {} raised exception {}", request.getRequestURL(), exception);
-//
-//        ModelAndView mav = new ModelAndView();
-//        mav.addObject("exception", exception);
-//        mav.addObject("url", request.getRequestURL());
-//        mav.addObject("timestamp", LocalDate.now(Clock.systemUTC()));
-//        mav.setViewName(GENERIC_ERROR_VIEW_NAME);
-//        return mav;
-//    }
+    @ExceptionHandler({StripeException.class, S3Exception.class})
+    public ModelAndView signupException(HttpServletRequest request, Exception exception) {
+
+        LOG.error("Request {} raised exception {}", request.getRequestURL(), exception);
+
+        ModelAndView mav = new ModelAndView();
+        mav.addObject("exception", exception);
+        mav.addObject("url", request.getRequestURL());
+        mav.addObject("timestamp", LocalDate.now(Clock.systemUTC()));
+        mav.setViewName(GENERIC_ERROR_VIEW_NAME);
+        return mav;
+    }
 
 
     //--------------> Private methods

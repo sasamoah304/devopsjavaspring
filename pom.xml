@@ -101,6 +101,18 @@
 			<version>1.40.0</version>
 		</dependency>
 
+		<!--Spring Data Dependencies-->
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+		</dependency>
+
+
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+		</dependency>
+
 		<!--Commons Dependencies-->
 		<dependency>
 			<groupId>commons-io</groupId>

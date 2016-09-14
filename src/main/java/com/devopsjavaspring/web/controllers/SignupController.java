@@ -6,6 +6,7 @@ import com.devopsjavaspring.backend.persistence.domain.backend.Role;
 import com.devopsjavaspring.backend.persistence.domain.backend.User;
 import com.devopsjavaspring.backend.persistence.domain.backend.UserRole;
 import com.devopsjavaspring.backend.service.PlanService;
+import com.devopsjavaspring.backend.service.S3Service;
 import com.devopsjavaspring.backend.service.UserService;
 import com.devopsjavaspring.enums.PlansEnum;
 import com.devopsjavaspring.enums.RolesEnum;
@@ -44,8 +45,8 @@ public class    SignupController {
     @Autowired
     private UserService userService;
 
-//    @Autowired
-//    private S3Service s3Service;
+    @Autowired
+    private S3Service s3Service;
 //
 //    @Autowired
 //    private StripeService stripeService;
@@ -126,7 +127,7 @@ public class    SignupController {
         // Stores the profile image on Amazon S3 and stores the URL in the user's record
         if (file != null && !file.isEmpty()) {
 
-            String profileImageUrl = null; //s3Service.storeProfileImage(file, payload.getUsername());
+            String profileImageUrl = s3Service.storeProfileImage(file, payload.getUsername());
             if (profileImageUrl != null) {
                 user.setProfileImageUrl(profileImageUrl);
             } else {

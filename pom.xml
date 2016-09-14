@@ -87,6 +87,20 @@
 			<artifactId>logback-classic</artifactId>
 		</dependency>
 
+		<!--AWS Dependencies-->
+		<dependency>
+			<groupId>com.amazonaws</groupId>
+			<artifactId>aws-java-sdk</artifactId>
+			<version>LATEST</version>
+		</dependency>
+
+		<!--Commons Dependencies-->
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>LATEST</version>
+		</dependency>
+
 		<!--Webjars for jquery and bootstrap-->
 		<dependency>
 			<groupId>org.webjars</groupId>

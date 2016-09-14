@@ -94,6 +94,13 @@
 			<version>LATEST</version>
 		</dependency>
 
+		<!--Stripe Dependencies-->
+		<dependency>
+			<groupId>com.stripe</groupId>
+			<artifactId>stripe-java</artifactId>
+			<version>1.40.0</version>
+		</dependency>
+
 		<!--Commons Dependencies-->
 		<dependency>
 			<groupId>commons-io</groupId>

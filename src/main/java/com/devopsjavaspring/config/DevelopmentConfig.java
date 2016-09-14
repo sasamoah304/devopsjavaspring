@@ -3,6 +3,7 @@ package com.devopsjavaspring.config;
 import com.devopsjavaspring.backend.service.EmailService;
 import com.devopsjavaspring.backend.service.MockEmailService;
 import org.h2.server.web.WebServlet;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,6 +19,9 @@ import org.springframework.context.annotation.PropertySource;
 @PropertySource("file:///${user.home}/.devopsbuddy/application-dev.properties")
 public class DevelopmentConfig {
 
+    @Value("${stripe.test.private.key}")
+    private String stripeDevKey;
+
     @Bean
     public EmailService emailService(){
         return new MockEmailService();
@@ -28,5 +32,10 @@ public class DevelopmentConfig {
         ServletRegistrationBean bean = new ServletRegistrationBean(new WebServlet());
         bean.addUrlMappings("/console/*");
         return bean;
+    }
+
+    @Bean
+    public String stripeKey(){
+        return stripeDevKey;
     }
 }

@@ -9,5 +9,10 @@ pipeline {
         isUnix()
       }
     }
+    stage('sleep') {
+      steps {
+        echo 'Hello'
+      }
+    }
   }
 }

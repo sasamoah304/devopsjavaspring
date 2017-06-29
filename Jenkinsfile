@@ -10,7 +10,7 @@ pipeline {
       steps {
         echo 'Building...'
         bat 'mvn --version'
-        bat 'mvn clean package'
+        bat 'mvn clean package -Dmaven.test.skip=true'
       }
     }
     stage('Test') {

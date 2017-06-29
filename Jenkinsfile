@@ -1,4 +1,3 @@
-
 pipeline {
   agent any
   stages {
@@ -7,9 +6,10 @@ pipeline {
         echo '"${params.Greeting} World!"'
       }
     }
-   stage('Build') {
+    stage('Build') {
       steps {
         echo 'Building...'
+        bat 'mvn --version'
       }
     }
     stage('Test') {

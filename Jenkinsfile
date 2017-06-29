@@ -1,5 +1,4 @@
 
-
 pipeline {
   agent any
   stages {
@@ -12,6 +11,9 @@ pipeline {
       steps {
         echo 'Building...'
       }
+     steps {
+       bat "${mvnHome}\\bin\\mvn -B verify"
+     }
     }
     stage('Test') {
       steps {

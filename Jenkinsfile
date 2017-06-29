@@ -12,7 +12,7 @@ pipeline {
         echo 'Building...'
       }
      steps {
-       bat "${mvnHome}\\bin\\mvn -B verify"
+       bat "$mvn --version"
      }
     }
     stage('Test') {

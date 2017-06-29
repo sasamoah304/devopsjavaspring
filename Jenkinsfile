@@ -10,6 +10,7 @@ pipeline {
       steps {
         echo 'Building...'
         bat 'mvn --version'
+        bat 'mvn clean package'
       }
     }
     stage('Test') {

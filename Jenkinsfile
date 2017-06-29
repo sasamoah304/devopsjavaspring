@@ -9,7 +9,7 @@ pipeline {
     stage('Build') {
       steps {
         echo 'Building..'
-        bat 'println "sh mvn --version".execute().text'
+       
       }
     }
     stage('Test') {
